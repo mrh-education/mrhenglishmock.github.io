@@ -3,10 +3,1009 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MRH English Mock</title>
+  <title>MRH English Mock | Online Practice Test</title>
+  <style>
+    :root {
+      --primary: #1e3a8a;
+      --primary-light: #2563eb;
+      --accent: #0f766e;
+      --bg: #f1f5f9;
+      --card: #ffffff;
+      --text: #0f172a;
+      --muted: #475569;
+      --border: #cbd5e1;
+      --success: #15803d;
+      --danger: #b91c1c;
+      --warning: #b45309;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      color: #fff;
+      padding: 14px 18px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.15);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand h1 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+
+    .brand p {
+      font-size: 0.78rem;
+      opacity: 0.9;
+    }
+
+    .timer-badge {
+      background: rgba(255, 255, 255, 0.16);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      display: none;
+    }
+
+    .timer-badge.warning {
+      background: #dc2626;
+      border-color: #fecaca;
+      animation: pulse 1s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.04); }
+    }
+
+    main {
+      width: 100%;
+      max-width: 760px;
+      margin: 18px auto;
+      padding: 0 14px 32px;
+      flex: 1;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 14px;
+      padding: 20px;
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
+      border: 1px solid #e2e8f0;
+      margin-bottom: 16px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* Start Screen */
+    .test-badge {
+      display: inline-block;
+      background: #dbeafe;
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 0.78rem;
+      padding: 4px 10px;
+      border-radius: 999px;
+      margin-bottom: 10px;
+    }
+
+    .start-title {
+      font-size: 1.4rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 16px 0;
+    }
+
+    .meta-box {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .meta-box strong {
+      display: block;
+      font-size: 1.05rem;
+      color: var(--primary);
+    }
+
+    .meta-box span {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .instructions {
+      background: #f8fafc;
+      border-left: 4px solid var(--primary-light);
+      padding: 12px 14px;
+      border-radius: 8px;
+      margin-bottom: 18px;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .instructions ul {
+      padding-left: 18px;
+      margin-top: 6px;
+    }
+
+    .instructions li {
+      margin-bottom: 4px;
+    }
+
+    .form-group {
+      margin-bottom: 14px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.88rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 11px 12px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-group input:focus {
+      border-color: var(--primary-light);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      border: none;
+      border-radius: 10px;
+      padding: 12px 18px;
+      font-size: 0.96rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.08s;
+      text-decoration: none;
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .btn-primary {
+      background: var(--primary-light);
+      color: #fff;
+      width: 100%;
+    }
+
+    .btn-success {
+      background: var(--success);
+      color: #fff;
+    }
+
+    .btn-outline {
+      background: #fff;
+      color: var(--text);
+      border: 1.5px solid var(--border);
+    }
+
+    .btn-warning {
+      background: #fef3c7;
+      color: var(--warning);
+      border: 1px solid #fcd34d;
+    }
+
+    /* Quiz Area */
+    .quiz-top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      font-size: 0.88rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 7px;
+      background: #e2e8f0;
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--primary-light);
+      width: 10%;
+      transition: width 0.25s ease;
+    }
+
+    .topic-tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--accent);
+      background: #ccfbf1;
+      padding: 3px 9px;
+      border-radius: 6px;
+      margin-bottom: 10px;
+    }
+
+    .question-text {
+      font-size: 1.08rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: var(--text);
+    }
+
+    .options-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .option-btn {
+      width: 100%;
+      text-align: left;
+      background: #f8fafc;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 11px;
+      padding: 13px 14px;
+      font-size: 0.96rem;
+      color: var(--text);
+      cursor: pointer;
+      display: flex;
+      align-items: flex-start;
+      gap: 11px;
+      transition: all 0.15s ease;
+    }
+
+    .option-btn:hover {
+      border-color: var(--primary-light);
+      background: #eff6ff;
+    }
+
+    .option-btn.selected {
+      background: #dbeafe;
+      border-color: var(--primary-light);
+      font-weight: 600;
+    }
+
+    .opt-letter {
+      min-width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: #e2e8f0;
+      color: var(--text);
+      font-weight: 700;
+      font-size: 0.82rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1px;
+    }
+
+    .option-btn.selected .opt-letter {
+      background: var(--primary-light);
+      color: #fff;
+    }
+
+    .action-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .nav-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    /* Question Palette */
+    .palette-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .palette-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+    }
+
+    .pal-btn {
+      padding: 9px 0;
+      border-radius: 8px;
+      border: 1.5px solid #cbd5e1;
+      background: #f8fafc;
+      font-weight: 700;
+      font-size: 0.88rem;
+      cursor: pointer;
+    }
+
+    .pal-btn.active {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.25);
+    }
+
+    .pal-btn.answered {
+      background: #dcfce7;
+      border-color: #16a34a;
+      color: #14532d;
+    }
+
+    .pal-btn.review {
+      background: #fef3c7;
+      border-color: #d97706;
+      color: #78350f;
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 12px;
+      font-size: 0.76rem;
+      color: var(--muted);
+    }
+
+    .legend span {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 3px;
+      display: inline-block;
+    }
+
+    /* Result Screen */
+    .score-hero {
+      text-align: center;
+      padding: 12px 0 18px;
+      border-bottom: 1px solid #e2e8f0;
+      margin-bottom: 16px;
+    }
+
+    .score-circle {
+      width: 118px;
+      height: 118px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 12px;
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25);
+    }
+
+    .score-circle strong {
+      font-size: 1.65rem;
+      line-height: 1.1;
+    }
+
+    .score-circle span {
+      font-size: 0.78rem;
+      opacity: 0.9;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .stat-box {
+      padding: 12px;
+      border-radius: 10px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      text-align: center;
+    }
+
+    .stat-box strong {
+      display: block;
+      font-size: 1.15rem;
+    }
+
+    .stat-box span {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .review-item {
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 12px;
+      background: #fff;
+    }
+
+    .review-item.correct {
+      border-left: 5px solid var(--success);
+    }
+
+    .review-item.wrong {
+      border-left: 5px solid var(--danger);
+    }
+
+    .review-item.skipped {
+      border-left: 5px solid #94a3b8;
+    }
+
+    .review-q {
+      font-weight: 700;
+      font-size: 0.96rem;
+      margin-bottom: 8px;
+    }
+
+    .review-ans {
+      font-size: 0.88rem;
+      margin-bottom: 4px;
+    }
+
+    .explanation {
+      margin-top: 8px;
+      padding: 9px 11px;
+      background: #f8fafc;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    footer {
+      text-align: center;
+      padding: 14px;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    @media (min-width: 600px) {
+      .palette-grid {
+        grid-template-columns: repeat(10, 1fr);
+      }
+      .stats-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+  </style>
 </head>
 <body>
-  <h1>MRH English Mock Portal</h1>
-  <p>Mock tests and study resources coming soon.</p>
+
+  <header>
+    <div class="brand">
+      <h1>MRH English Mock</h1>
+      <p>MRH Education • Competitive &amp; Academic English</p>
+    </div>
+    <div id="timerDisplay" class="timer-badge">10:00</div>
+  </header>
+
+  <main>
+    <!-- 1. START SCREEN -->
+    <section id="startScreen" class="card">
+      <span class="test-badge">LIVE MOCK TEST • SET 01</span>
+      <h2 class="start-title">General English Grammar &amp; Vocabulary Mock Test</h2>
+      <p style="color: var(--muted); font-size: 0.92rem;">
+        Designed for WBCS, WBPSC Clerkship, SSC, TET, and Class IX–XII aspirants.
+      </p>
+
+      <div class="meta-grid">
+        <div class="meta-box">
+          <strong>10</strong>
+          <span>Questions</span>
+        </div>
+        <div class="meta-box">
+          <strong>10 Min</strong>
+          <span>Duration</span>
+        </div>
+        <div class="meta-box">
+          <strong>+1 / -0.25</strong>
+          <span>Marking</span>
+        </div>
+      </div>
+
+      <div class="instructions">
+        <strong>Test Instructions:</strong>
+        <ul>
+          <li>Each correct answer carries <strong>+1 mark</strong>; each wrong answer deducts <strong>0.25 marks</strong>.</li>
+          <li>Unattempted questions carry <strong>0 marks</strong>.</li>
+          <li>Use the question palette below the card to jump to any question at any time.</li>
+          <li>The test submits automatically when the countdown timer reaches <strong>00:00</strong>.</li>
+        </ul>
+      </div>
+
+      <div class="form-group">
+        <label for="candidateName">Candidate Full Name *</label>
+        <input type="text" id="candidateName" placeholder="Enter your full name" required />
+      </div>
+
+      <button class="btn btn-primary" onclick="startTest()">Start Mock Test</button>
+    </section>
+
+    <!-- 2. QUIZ SCREEN -->
+    <section id="quizScreen" class="hidden">
+      <div class="card">
+        <div class="quiz-top-bar">
+          <span id="questionCounter">Question 1 of 10</span>
+          <span id="candidateLabel">Candidate</span>
+        </div>
+
+        <div class="progress-track">
+          <div id="progressFill" class="progress-fill"></div>
+        </div>
+
+        <span id="topicTag" class="topic-tag">Topic</span>
+        <div id="questionText" class="question-text">Question loads here...</div>
+
+        <div id="optionsContainer" class="options-list"></div>
+
+        <div class="action-row">
+          <button class="btn btn-outline" onclick="clearResponse()">Clear Response</button>
+          <button class="btn btn-warning" onclick="toggleReview()">Mark for Review</button>
+        </div>
+
+        <div class="nav-row">
+          <button id="prevBtn" class="btn btn-outline" onclick="prevQuestion()">← Previous</button>
+          <button id="nextBtn" class="btn btn-primary" onclick="nextQuestion()">Save &amp; Next →</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="palette-title">
+          <span>Question Palette</span>
+          <button class="btn btn-success" style="padding: 7px 14px; font-size: 0.85rem;" onclick="confirmSubmit()">
+            Submit Test
+          </button>
+        </div>
+        <div id="paletteGrid" class="palette-grid"></div>
+        <div class="legend">
+          <span><i class="dot" style="background:#dcfce7; border:1px solid #16a34a;"></i> Answered</span>
+          <span><i class="dot" style="background:#fef3c7; border:1px solid #d97706;"></i> Marked for Review</span>
+          <span><i class="dot" style="background:#f8fafc; border:1px solid #cbd5e1;"></i> Not Answered</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. RESULT SCREEN -->
+    <section id="resultScreen" class="hidden">
+      <div class="card">
+        <div class="score-hero">
+          <p id="resultCandidate" style="font-weight:700; color:var(--primary); margin-bottom:10px;"></p>
+          <div class="score-circle">
+            <strong id="finalScore">0.00</strong>
+            <span id="maxScoreLabel">out of 10</span>
+          </div>
+          <h2 id="performanceMsg" style="font-size:1.2rem; margin-bottom:4px;">Test Completed</h2>
+          <p id="timeTakenLabel" style="font-size:0.86rem; color:var(--muted);"></p>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-box">
+            <strong id="correctCount" style="color:var(--success);">0</strong>
+            <span>Correct</span>
+          </div>
+          <div class="stat-box">
+            <strong id="wrongCount" style="color:var(--danger);">0</strong>
+            <span>Wrong</span>
+          </div>
+          <div class="stat-box">
+            <strong id="skippedCount" style="color:var(--muted);">0</strong>
+            <span>Skipped</span>
+          </div>
+          <div class="stat-box">
+            <strong id="accuracyLabel" style="color:var(--primary);">0%</strong>
+            <span>Accuracy</span>
+          </div>
+        </div>
+
+        <button class="btn btn-primary" onclick="location.reload()">Retake Mock Test</button>
+      </div>
+
+      <div class="card">
+        <h3 style="font-size:1.05rem; margin-bottom:12px;">Detailed Answer Key &amp; Explanations</h3>
+        <div id="reviewContainer"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2026 MRH Education • MRH English Mock Hub
+  </footer>
+
+  <script>
+    // ==========================================
+    // EDIT YOUR QUESTIONS & SETTINGS HERE
+    // ==========================================
+    const TEST_DURATION_MINUTES = 10;
+    const POSITIVE_MARK = 1;
+    const NEGATIVE_MARK = 0.25;
+
+    const QUESTIONS = [
+      {
+        topic: "Fixed Preposition",
+        question: "He was acquitted ______ all the charges brought against him.",
+        options: ["from", "of", "with", "by"],
+        answer: 1,
+        explanation: "The verb 'acquit' takes the fixed preposition 'of' when referring to a crime or charge (acquitted of all charges)."
+      },
+      {
+        topic: "One-Word Substitution",
+        question: "A person who is indifferent to pleasure and pain is called a:",
+        options: ["Cynic", "Stoic", "Epicure", "Ascetic"],
+        answer: 1,
+        explanation: "A 'Stoic' is a person who can endure pain or hardship without showing their feelings or complaining."
+      },
+      {
+        topic: "Phrasal Verbs",
+        question: "The match had to be ______ because of heavy rain.",
+        options: ["called off", "called out", "called in", "called up"],
+        answer: 0,
+        explanation: "'Call off' means to cancel an event or agreement."
+      },
+      {
+        topic: "Subject-Verb Agreement",
+        question: "Neither the captain nor the players ______ present at the ceremony.",
+        options: ["was", "is", "were", "has been"],
+        answer: 2,
+        explanation: "With 'neither...nor', the verb agrees with the subject closer to it ('players' is plural, so 'were' is correct)."
+      },
+      {
+        topic: "Idioms & Phrases",
+        question: "Choose the correct meaning of the idiom: 'To burn the midnight oil'",
+        options: [
+          "To waste money recklessly",
+          "To read or work late into the night",
+          "To start a quarrel",
+          "To destroy valuable evidence"
+        ],
+        answer: 1,
+        explanation: "'To burn the midnight oil' means to study or work late at night."
+      },
+      {
+        topic: "Synonyms",
+        question: "Select the most appropriate synonym of 'EPHEMERAL':",
+        options: ["Eternal", "Transitory", "Stubborn", "Transparent"],
+        answer: 1,
+        explanation: "'Ephemeral' means lasting for a very short time, which is synonymous with 'transitory'."
+      },
+      {
+        topic: "Antonyms",
+        question: "Select the most appropriate antonym of 'MITIGATE':",
+        options: ["Alleviate", "Lessen", "Aggravate", "Pacify"],
+        answer: 2,
+        explanation: "'Mitigate' means to make less severe; its opposite is 'aggravate' (to make worse)."
+      },
+      {
+        topic: "Articles & Determiners",
+        question: "Thomas is ______ European scholar visiting the university.",
+        options: ["an", "a", "the", "no article"],
+        answer: 1,
+        explanation: "'European' begins with a consonant sound (/j/, like 'you'), so the indefinite article 'a' is used."
+      },
+      {
+        topic: "Conditional Sentences",
+        question: "Had he worked harder, he ______ the examination.",
+        options: ["will pass", "would pass", "would have passed", "passed"],
+        answer: 2,
+        explanation: "In a third conditional sentence ('Had + subject + V3'), the main clause uses 'would have + V3'."
+      },
+      {
+        topic: "Spelling Test",
+        question: "Identify the correctly spelt word:",
+        options: ["Accomodation", "Acommodation", "Accommodation", "Acomodation"],
+        answer: 2,
+        explanation: "'Accommodation' is spelt with double 'c' and double 'm'."
+      }
+    ];
+
+    // ==========================================
+    // TEST ENGINE LOGIC
+    // ==========================================
+    let currentIdx = 0;
+    let userAnswers = new Array(QUESTIONS.length).fill(null);
+    let markedReview = new Array(QUESTIONS.length).fill(false);
+    let totalSeconds = TEST_DURATION_MINUTES * 60;
+    let remainingSeconds = totalSeconds;
+    let timerInterval = null;
+    let candidateName = "";
+    let isSubmitted = false;
+
+    function startTest() {
+      const nameInput = document.getElementById("candidateName").value.trim();
+      if (!nameInput) {
+        alert("Please enter your full name before starting the test.");
+        document.getElementById("candidateName").focus();
+        return;
+      }
+
+      candidateName = nameInput;
+      document.getElementById("candidateLabel").textContent = candidateName;
+      document.getElementById("startScreen").classList.add("hidden");
+      document.getElementById("quizScreen").classList.remove("hidden");
+
+      const timerEl = document.getElementById("timerDisplay");
+      timerEl.style.display = "inline-block";
+
+      buildPalette();
+      renderQuestion();
+      startTimer();
+    }
+
+    function startTimer() {
+      updateTimerDisplay();
+      timerInterval = setInterval(() => {
+        remainingSeconds--;
+        updateTimerDisplay();
+        if (remainingSeconds <= 0) {
+          clearInterval(timerInterval);
+          submitTest(true);
+        }
+      }, 1000);
+    }
+
+    function updateTimerDisplay() {
+      const mins = Math.floor(remainingSeconds / 60);
+      const secs = remainingSeconds % 60;
+      const formatted = `${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
+      const timerEl = document.getElementById("timerDisplay");
+      timerEl.textContent = formatted;
+
+      if (remainingSeconds <= 60) {
+        timerEl.classList.add("warning");
+      }
+    }
+
+    function renderQuestion() {
+      const q = QUESTIONS[currentIdx];
+      document.getElementById("questionCounter").textContent = `Question ${currentIdx + 1} of ${QUESTIONS.length}`;
+      document.getElementById("topicTag").textContent = q.topic;
+      document.getElementById("questionText").textContent = `${currentIdx + 1}. ${q.question}`;
+
+      const progressPct = ((currentIdx + 1) / QUESTIONS.length) * 100;
+      document.getElementById("progressFill").style.width = `${progressPct}%`;
+
+      const optionsContainer = document.getElementById("optionsContainer");
+      optionsContainer.innerHTML = "";
+      const letters = ["A", "B", "C", "D"];
+
+      q.options.forEach((opt, idx) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "option-btn" + (userAnswers[currentIdx] === idx ? " selected" : "");
+        btn.innerHTML = `<span class="opt-letter">${letters[idx]}</span><span>${opt}</span>`;
+        btn.onclick = () => selectOption(idx);
+        optionsContainer.appendChild(btn);
+      });
+
+      document.getElementById("prevBtn").disabled = currentIdx === 0;
+      document.getElementById("prevBtn").style.opacity = currentIdx === 0 ? "0.5" : "1";
+
+      const nextBtn = document.getElementById("nextBtn");
+      if (currentIdx === QUESTIONS.length - 1) {
+        nextBtn.textContent = "Finish & Submit";
+        nextBtn.className = "btn btn-success";
+      } else {
+        nextBtn.textContent = "Save & Next →";
+        nextBtn.className = "btn btn-primary";
+      }
+
+      updatePalette();
+    }
+
+    function selectOption(optIdx) {
+      userAnswers[currentIdx] = optIdx;
+      renderQuestion();
+    }
+
+    function clearResponse() {
+      userAnswers[currentIdx] = null;
+      renderQuestion();
+    }
+
+    function toggleReview() {
+      markedReview[currentIdx] = !markedReview[currentIdx];
+      updatePalette();
+    }
+
+    function prevQuestion() {
+      if (currentIdx > 0) {
+        currentIdx--;
+        renderQuestion();
+      }
+    }
+
+    function nextQuestion() {
+      if (currentIdx < QUESTIONS.length - 1) {
+        currentIdx++;
+        renderQuestion();
+      } else {
+        confirmSubmit();
+      }
+    }
+
+    function buildPalette() {
+      const grid = document.getElementById("paletteGrid");
+      grid.innerHTML = "";
+      QUESTIONS.forEach((_, idx) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "pal-btn";
+        btn.textContent = idx + 1;
+        btn.onclick = () => {
+          currentIdx = idx;
+          renderQuestion();
+        };
+        grid.appendChild(btn);
+      });
+    }
+
+    function updatePalette() {
+      const buttons = document.querySelectorAll(".pal-btn");
+      buttons.forEach((btn, idx) => {
+        btn.className = "pal-btn";
+        if (idx === currentIdx) btn.classList.add("active");
+        if (markedReview[idx]) {
+          btn.classList.add("review");
+        } else if (userAnswers[idx] !== null) {
+          btn.classList.add("answered");
+        }
+      });
+    }
+
+    function confirmSubmit() {
+      const unanswered = userAnswers.filter(a => a === null).length;
+      const msg = unanswered > 0
+        ? `You still have ${unanswered} unanswered question(s). Submit the test now?`
+        : "Are you sure you want to submit your mock test?";
+      if (confirm(msg)) {
+        submitTest(false);
+      }
+    }
+
+    function submitTest(autoSubmitted) {
+      if (isSubmitted) return;
+      isSubmitted = true;
+      clearInterval(timerInterval);
+
+      document.getElementById("timerDisplay").style.display = "none";
+      document.getElementById("quizScreen").classList.add("hidden");
+      document.getElementById("resultScreen").classList.remove("hidden");
+
+      let correct = 0;
+      let wrong = 0;
+      let skipped = 0;
+
+      QUESTIONS.forEach((q, idx) => {
+        if (userAnswers[idx] === null) {
+          skipped++;
+        } else if (userAnswers[idx] === q.answer) {
+          correct++;
+        } else {
+          wrong++;
+        }
+      });
+
+      const score = (correct * POSITIVE_MARK) - (wrong * NEGATIVE_MARK);
+      const maxScore = QUESTIONS.length * POSITIVE_MARK;
+      const attempted = correct + wrong;
+      const accuracy = attempted > 0 ? Math.round((correct / attempted) * 100) : 0;
+
+      const spentSeconds = totalSeconds - remainingSeconds;
+      const spentMins = Math.floor(spentSeconds / 60);
+      const spentSecs = spentSeconds % 60;
+
+      document.getElementById("resultCandidate").textContent = `Candidate: ${candidateName}`;
+      document.getElementById("finalScore").textContent = score.toFixed(2);
+      document.getElementById("maxScoreLabel").textContent = `out of ${maxScore}`;
+      document.getElementById("correctCount").textContent = correct;
+      document.getElementById("wrongCount").textContent = wrong;
+      document.getElementById("skippedCount").textContent = skipped;
+      document.getElementById("accuracyLabel").textContent = `${accuracy}%`;
+      document.getElementById("timeTakenLabel").textContent =
+        `${autoSubmitted ? "Time expired! " : ""}Time Taken: ${spentMins}m ${spentSecs}s`;
+
+      const pct = (score / maxScore) * 100;
+      let remark = "Keep Practicing!";
+      if (pct >= 80) remark = "Excellent Performance!";
+      else if (pct >= 60) remark = "Good Job!";
+      else if (pct >= 40) remark = "Fair Attempt — Review Weak Topics";
+      document.getElementById("performanceMsg").textContent = remark;
+
+      renderAnswerReview();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function renderAnswerReview() {
+      const container = document.getElementById("reviewContainer");
+      container.innerHTML = "";
+      const letters = ["A", "B", "C", "D"];
+
+      QUESTIONS.forEach((q, idx) => {
+        const userAns = userAnswers[idx];
+        const isCorrect = userAns === q.answer;
+        const isSkipped = userAns === null;
+
+        const statusClass = isSkipped ? "skipped" : (isCorrect ? "correct" : "wrong");
+        const statusText = isSkipped
+          ? "Not Attempted (0)"
+          : (isCorrect ? `Correct (+${POSITIVE_MARK})` : `Incorrect (-${NEGATIVE_MARK})`);
+
+        const yourAnswerText = isSkipped
+          ? "None"
+          : `${letters[userAns]}. ${q.options[userAns]}`;
+
+        const correctAnswerText = `${letters[q.answer]}. ${q.options[q.answer]}`;
+
+        const div = document.createElement("div");
+        div.className = `review-item ${statusClass}`;
+        div.innerHTML = `
+          <div style="font-size:0.78rem; font-weight:700; margin-bottom:4px; color:var(--muted);">
+            ${q.topic} • ${statusText}
+          </div>
+          <div class="review-q">Q${idx + 1}. ${q.question}</div>
+          <div class="review-ans"><strong>Your Answer:</strong> ${yourAnswerText}</div>
+          <div class="review-ans" style="color:var(--success);"><strong>Correct Answer:</strong> ${correctAnswerText}</div>
+          <div class="explanation"><strong>Explanation:</strong> ${q.explanation}</div>
+        `;
+        container.appendChild(div);
+      });
+    }
+  </script>
 </body>
 </html>
